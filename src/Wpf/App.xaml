@@ -1,0 +1,42 @@
+﻿<Application x:Class="Wpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+             xmlns:local="clr-namespace:Wpf"
+             xmlns:model="clr-namespace:Wpf.Models"
+             xmlns:Views="clr-namespace:Wpf.Views"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:Custom="http://schemas.microsoft.com/wpf/2008/toolkit"   
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <!-- Accent and AppTheme setting -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="{x:Type Controls:WindowButtonCommands}"
+                   BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
+
+            <Style x:Key="Style_Typerighter">
+                <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Wpf/Font/#RM Typerighter medium" />
+            </Style>
+            <Style x:Key="Style_KaisoMakinaB">
+                <Setter Property="TextElement.FontSize" Value="32" />
+                <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/Wpf/Font/#Kaiso Makina B" />
+            </Style>
+
+            <FontFamily x:Key="Typerighter">pack://application:,,,/Wpf/Font/#RM Typerighter medium</FontFamily>
+            <FontFamily x:Key="KaisoMakinaB">pack://application:,,,/Wpf/Font/#Kaiso Makina B</FontFamily>
+
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

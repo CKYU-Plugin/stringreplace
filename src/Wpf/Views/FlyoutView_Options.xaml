@@ -1,0 +1,296 @@
+﻿<UserControl x:Class="Wpf.Views.FlyoutView_Options"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Wpf.Views"
+      xmlns:model="clr-namespace:Wpf.Models"
+      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      mc:Ignorable="d" 
+      d:DesignHeight="250" d:DesignWidth="1000" Background="#66CCFF">
+    <UserControl.Resources>
+
+        <model:LstEnumToDescriptionConverter x:Key="LstEnumToDescriptionConverter"/>
+        <model:EnumToDescriptionConverter x:Key="EnumToDescriptionConverter"/>
+        <model:EnableConverter x:Key="EnableConverter"/>
+        <model:TextConverter x:Key="TextConverter"/>
+        <model:TriggerConverter x:Key="TriggerConverter"/>
+        
+        <DataTemplate x:Key="TG_1">
+            <Border Height="30" Width="150" HorizontalAlignment="Left" BorderBrush="#66CCFF" CornerRadius="0,0,0,0" BorderThickness="2,2,2,2">
+
+                <DockPanel HorizontalAlignment="Left">
+                    <Label Width="80" Content="{Binding TriggerDescription}"></Label>
+                    <Controls:ToggleSwitch Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}" Margin="0,0,0,0" 
+                                                       HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                                       OffSwitchBrush="Orange" OnSwitchBrush="LightGreen" 
+                                                       OnLabel="" OffLabel="" HorizontalContentAlignment="Right" Tag="{Binding TriggerDescription}" IsChecked="{Binding IsEnable}" IsCheckedChanged="ToggleSwitch_IsCheckedChanged" >
+                    </Controls:ToggleSwitch>
+                    <!--<Controls:ToggleSwitch.IsChecked>
+                            <Binding Path="MyProperty" Converter="{StaticResource EnableConverter}">
+                                <Binding.ConverterParameter>
+                                    <x:Array Type="{x:Type model:TIDs}">
+                                        <x:Static Member="model:TIDs.FS" />
+                                        <x:Static Member="model:TIDs.FT" />
+                                    </x:Array>
+                                </Binding.ConverterParameter>
+                            </Binding>
+                        </Controls:ToggleSwitch.IsChecked>-->
+
+
+                </DockPanel>
+
+            </Border>
+        </DataTemplate>
+
+        <Style x:Key="ListBoxStyle1" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+
+
+        
+    </UserControl.Resources>
+    
+    <Grid Background="#66CCFF" >
+
+        <StackPanel>
+            <Label Background="#66CCFF" Panel.ZIndex="1" Width="32" Height="20" Foreground="WhiteSmoke"  MouseDown="CloseLabel_MouseDown" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Center">
+                <iconPacks:PackIconModern Kind="Close"  Width="10" Height="10"/>
+            </Label>
+            <TabControl Margin="2,-25,0,0" x:Name="tabControl" Width="1000" Height="250" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TabPanel}">
+                        <Setter Property="Background" Value="#66CCFF"></Setter>
+                    </Style>
+                </TabControl.Resources>
+                <TabItem IsSelected="True">
+                    <TabItem.Header>
+                        <DockPanel LastChildFill="True" Background="Transparent">
+                            <iconPacks:PackIconMaterial Kind="Settings" Width="30"
+                        Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.Foreground)}"
+                        FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}"
+                        VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <TextBlock 
+                            Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.Foreground)}"
+                            Text="基本設定" FontSize="20"/>
+                        </DockPanel>
+                    </TabItem.Header>
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80*"/>
+                            <ColumnDefinition Width="417*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.ColumnSpan="2">
+
+                            <DockPanel>
+                                <StackPanel Width="600" HorizontalAlignment="Left">
+
+                                    <DockPanel Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <DockPanel Width="120">
+                                            <Label FontSize="20" HorizontalAlignment="Stretch" Foreground="Gray" VerticalAlignment="Stretch">#</Label>
+                                            <Label Foreground="Gray" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding SRList.SelectedItem.Id}"></Label>
+                                        </DockPanel>
+                                        <ComboBox Width="120" HorizontalAlignment="Left" SelectedIndex="{Binding SRList.SelectedItem.TypeId,FallbackValue=0}" ItemsSource="{Binding CSRID}" ></ComboBox>
+                                        <DockPanel Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                                            <Controls:ToggleSwitch Width="120" Margin="0,0,0,0"  IsChecked="{Binding SRList.SelectedItem.IsEnabled,FallbackValue=False}"        
+                                                       HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                                       OffSwitchBrush="Orange" OnSwitchBrush="LightGreen" 
+                                                       OnLabel="啟用" OffLabel="停用" HorizontalContentAlignment="Right" ></Controls:ToggleSwitch>
+                                        </DockPanel>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,5,0,0" Height="85"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Label Width="120">詞條</Label>
+                                        <TextBox Width="450" Height="85" Text="{Binding SRList.SelectedItem.Condition}"   
+                                         TextWrapping="Wrap"
+                                         AcceptsReturn="True"
+                                         VerticalScrollBarVisibility="Visible"></TextBox>
+                                    </DockPanel>
+                                    <DockPanel IsEnabled="{Binding SRList.SelectedItem.TypeId,Converter={StaticResource EnableConverter}, ConverterParameter=BLBR}" Margin="0,5,0,0"  Height="85"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Label Width="120" Content="{Binding SRList.SelectedItem.TypeId,Converter={StaticResource TextConverter}, ConverterParameter=Value,FallbackValue=值}"></Label>
+                                        <TextBox Width="450" Height="85" Text="{Binding SRList.SelectedItem.Value}"   
+                                         TextWrapping="Wrap"
+                                         AcceptsReturn="True"
+                                         VerticalScrollBarVisibility="Visible"></TextBox>
+                                    </DockPanel>
+                                </StackPanel>
+                                <StackPanel Visibility="Collapsed" IsEnabled="{Binding SRList.SelectedItem.TypeId,Converter={StaticResource EnableConverter}, ConverterParameter=FW}" Width="400" HorizontalAlignment="Right">
+                                    <DockPanel HorizontalAlignment="Right">
+                                        <DockPanel>
+                                            <StackPanel HorizontalAlignment="Left">
+                                                <Label Height="25" >轉發-對像QQ</Label>
+                                                <TextBox Name="TGQQTB" Text="{Binding ElementName=TGQQL, Path=SelectedItem.GivenName}"></TextBox>
+                                                <Border Height="160" Width="150" HorizontalAlignment="Left" BorderBrush="#66CCFF" CornerRadius="0,0,0,0" BorderThickness="2,2,2,2">
+
+                                                    <ListBox ItemsSource="{Binding SRList.SelectedItem.TGQQ , Mode=TwoWay}" Height="160"
+                                                      ScrollViewer.PanningMode="Both" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                      AllowDrop="False" Visibility="Visible" Name="TGQQL"></ListBox>
+                                                </Border>
+                                            </StackPanel>
+
+                                            <StackPanel Width="40">
+                                                <Button>
+                                                    <iconPacks:PackIconModern Kind="Add" Foreground="#66CCFF" />
+                                                </Button>
+                                                <Button>
+                                                    <iconPacks:PackIconModern Kind="Minus" Foreground="Orange" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DockPanel>
+                                        <DockPanel>
+                                            <StackPanel HorizontalAlignment="Left">
+                                                <Label Height="25" >轉發-對像群</Label>
+                                                <TextBox Name="TGGroupsTB" Text="{Binding ElementName=TGQQL, Path=SelectedItem.GivenName}"></TextBox>
+                                                <Border Height="160" Width="150" HorizontalAlignment="Left" BorderBrush="#66CCFF" CornerRadius="0,0,0,0" BorderThickness="2,2,2,2">
+
+                                                    <ListBox ItemsSource="{Binding SRList.SelectedItem.TGGroups, Mode=TwoWay}" Height="160"
+                                                      ScrollViewer.PanningMode="Both" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                      AllowDrop="False" Visibility="Visible" Name="TGGroupsL"></ListBox>
+                                                </Border>
+                                            </StackPanel>
+                                            <StackPanel Width="40">
+                                                <Button>
+                                                    <iconPacks:PackIconModern Kind="Add" Foreground="#66CCFF" />
+                                                </Button>
+                                                <Button>
+                                                    <iconPacks:PackIconModern Kind="Minus" Foreground="Orange" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </DockPanel>
+                                </StackPanel>
+                            </DockPanel>
+                        </StackPanel>
+
+                    </Grid>
+                </TabItem>
+                <TabItem IsEnabled="False">
+                    <TabItem.Header>
+                        <DockPanel LastChildFill="True" Background="Transparent">
+                            <iconPacks:PackIconMaterial Kind="Flag" Width="30"
+                        Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.Foreground)}"
+                        FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.FontSize)}"
+                        VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <TextBlock Width="50"
+                            Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}, Path=(TextElement.Foreground)}"
+                            Text="觸發" FontSize="20"/>
+                            <Controls:Badged Badge="{Binding SRList.SelectedItem.TriggerID.Count, FallbackValue=?}" BadgePlacementMode="Left">
+                                <Label></Label>
+                            </Controls:Badged>
+                        </DockPanel>
+                    </TabItem.Header>
+                    <DockPanel>
+                        <DockPanel Width="180" HorizontalAlignment="Left">
+                            <Border Height="200" Width="180" HorizontalAlignment="Left" BorderBrush="#66CCFF" CornerRadius="0,0,0,0" BorderThickness="2,2,2,2">
+
+                                <ListBox Height="{Binding ListHeight}" ScrollViewer.PanningMode="Both" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                AllowDrop="False" Visibility="Visible" Name="TG" 
+                         Style="{StaticResource ListBoxStyle1}"
+                         ItemsSource="{Binding Path=CTID , Mode=TwoWay}" 
+                         ItemTemplate="{StaticResource TG_1}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5">
+
+                                </ListBox>
+                            </Border>
+                        </DockPanel>
+                        <DockPanel HorizontalAlignment="Right">
+                            <DockPanel>
+                            <StackPanel HorizontalAlignment="Left">
+                                    <Label Foreground="Gray" Height="25" >指定QQ</Label>
+                                <TextBox Name="Trigger_QQTB" Text="{Binding ElementName=TGQQL, Path=SelectedItem.GivenName}"></TextBox>
+                                <Border Height="160" Width="150" HorizontalAlignment="Left" BorderBrush="#66CCFF" CornerRadius="0,0,0,0" BorderThickness="2,2,2,2">
+
+                                    <ListBox ItemsSource="{Binding SRList.SelectedItem.TGQQ , Mode=TwoWay}" Height="160"
+                                                      ScrollViewer.PanningMode="Both" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                      AllowDrop="False" Visibility="Visible" Name="Trigger_QQLB"></ListBox>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Width="40">
+                                <Button>
+                                    <iconPacks:PackIconModern Kind="Add" Foreground="#66CCFF" />
+                                </Button>
+                                <Button>
+                                    <iconPacks:PackIconModern Kind="Minus" Foreground="Orange" />
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+                            <DockPanel>
+                            <StackPanel HorizontalAlignment="Left">
+                                    <Label Foreground="Gray" Height="25" >指定群</Label>
+                                <TextBox Name="Trigger_GroupsTB" Text="{Binding ElementName=TGQQL, Path=SelectedItem.GivenName}"></TextBox>
+                                <Border Height="160" Width="150" HorizontalAlignment="Left" BorderBrush="#66CCFF" CornerRadius="0,0,0,0" BorderThickness="2,2,2,2">
+
+                                    <ListBox ItemsSource="{Binding SRList.SelectedItem.TGQQ , Mode=TwoWay}" Height="160"
+                                                      ScrollViewer.PanningMode="Both" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                      AllowDrop="False" Visibility="Visible" Name="Trigger_GroupsLB"></ListBox>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Width="40">
+                                <Button>
+                                    <iconPacks:PackIconModern Kind="Add" Foreground="#66CCFF" />
+                                </Button>
+                                <Button>
+                                    <iconPacks:PackIconModern Kind="Minus" Foreground="Orange" />
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+                            <DockPanel>
+                            <StackPanel HorizontalAlignment="Left">
+                                    <Label Foreground="Gray" Height="25" >指定時段</Label>
+                                <TextBox Name="Trigger_TimeTB" Text="{Binding ElementName=TGQQL, Path=SelectedItem.GivenName}"></TextBox>
+                                <Border Height="160" Width="150" HorizontalAlignment="Left" BorderBrush="#66CCFF" CornerRadius="0,0,0,0" BorderThickness="2,2,2,2">
+
+                                    <ListBox ItemsSource="{Binding SRList.SelectedItem.TGQQ , Mode=TwoWay}" Height="160"
+                                                      ScrollViewer.PanningMode="Both" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                      AllowDrop="False" Visibility="Visible" Name="Trigger_TimeLB"></ListBox>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Width="40">
+                                <Button>
+                                    <iconPacks:PackIconModern Kind="Add" Foreground="#66CCFF" />
+                                </Button>
+                                <Button>
+                                    <iconPacks:PackIconModern Kind="Minus" Foreground="Orange" />
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+                            <DockPanel>
+                            <StackPanel HorizontalAlignment="Left">
+                                    <Label Foreground="Gray"  Height="25" >指定插件ID</Label>
+                                <TextBox Name="Trigger_PluginIDTB" Text="{Binding ElementName=TGQQL, Path=SelectedItem.GivenName}"></TextBox>
+                                <Border Height="160" Width="150" HorizontalAlignment="Left" BorderBrush="#66CCFF" CornerRadius="0,0,0,0" BorderThickness="2,2,2,2">
+
+                                    <ListBox ItemsSource="{Binding SRList.SelectedItem.TGQQ , Mode=TwoWay}" Height="160"
+                                                      ScrollViewer.PanningMode="Both" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                      AllowDrop="False" Visibility="Visible" Name="Trigger_PluginIDLB"></ListBox>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Width="40">
+                                <Button>
+                                    <iconPacks:PackIconModern Kind="Add" Foreground="#66CCFF" />
+                                </Button>
+                                <Button>
+                                    <iconPacks:PackIconModern Kind="Minus" Foreground="Orange" />
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+                        </DockPanel>
+                    </DockPanel>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </Grid>
+
+</UserControl>
